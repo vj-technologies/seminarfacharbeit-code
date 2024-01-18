@@ -1,8 +1,0 @@
-[package]
-name = "sorting-in-rust"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-cpu-time = "1.0.0"
-random = "0.14.0"
