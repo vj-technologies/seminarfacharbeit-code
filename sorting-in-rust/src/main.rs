@@ -1,4 +1,3 @@
-#![allow(unused)]
 use cpu_time::ProcessTime;
 use random::Source;
 
