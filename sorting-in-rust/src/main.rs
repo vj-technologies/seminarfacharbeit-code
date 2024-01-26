@@ -1,5 +1,15 @@
+mod bubble_sort;
+mod selection_sort;
+mod block_sort;
+
+use bubble_sort::bubble_sort;
+use selection_sort::selection_sort;
+use block_sort::block_sort;
+
+// third party crates
 use cpu_time::ProcessTime;
 use random::Source;
+// ------------------
 
 fn main() {
     println!("Bubble sort:");
@@ -7,6 +17,9 @@ fn main() {
 
     println!("Selection sort:");
     test_algorithm(&selection_sort);
+
+    println!("Block sort:");
+    test_algorithm(&block_sort);
 }
 
 fn test_algorithm(f: &dyn Fn(&mut Vec<i32>)) {
@@ -42,27 +55,4 @@ fn verify_sorted_ascending(array: &Vec<i32>) -> bool {
     }
 
     true
-}
-
-fn bubble_sort(array: &mut Vec<i32>) {
-    for _ in 1..array.len() {
-        for i in 1..array.len() {
-            if array[i-1] < array[i] {
-                continue;
-            }
-            array.swap(i-1, i);
-        }
-    }
-}
-
-fn selection_sort(array: &mut Vec<i32>) {
-    for i in 0..array.len()-1 {
-        let mut min: usize = i;
-        for j in i+1..array.len() {
-            if array[min] > array[j] {
-                min = j;
-            }
-        }
-        array.swap(min, i);
-    }
 }
