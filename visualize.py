@@ -5,7 +5,7 @@ GROUPING_SIZE = 500_000
 
 
 # BUBBLE SORT
-with open("sorting-in-rust/bubble_sort.json", "r") as file:
+with open("bubble_sort.json", "r") as file:
     bubble = json.load(file)
 
 bubble_1k_x = []
@@ -24,7 +24,7 @@ plt.bar(bubble_1k_x, bubble_1k_y, label="Bubble Sort")
 
 
 # SELECTION SORT
-with open("sorting-in-rust/selection_sort.json", "r") as file:
+with open("selection_sort.json", "r") as file:
     selection = json.load(file)
 
 selection_1k_x = []
