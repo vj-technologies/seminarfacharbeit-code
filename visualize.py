@@ -4,44 +4,38 @@ import json
 GROUPING_SIZE = 500_000
 
 
-# BUBBLE SORT
 with open("bubble_sort.json", "r") as file:
     bubble = json.load(file)
 
-bubble_1k_x = []
-bubble_1k_y = []
-for b in bubble["1k"]:
-    b = round(b/GROUPING_SIZE)
-    try:
-        index = bubble_1k_x.index(b)
-    except ValueError:
-        bubble_1k_x.append(b)
-        bubble_1k_y.append(1)
-    else:
-        bubble_1k_y[index] += 1
-
-plt.bar(bubble_1k_x, bubble_1k_y, label="Bubble Sort")
-
-
-# SELECTION SORT
 with open("selection_sort.json", "r") as file:
     selection = json.load(file)
 
-selection_1k_x = []
-selection_1k_y = []
-for b in selection["1k"]:
-    b = round(b/GROUPING_SIZE)
-    try:
-        index = selection_1k_x.index(b)
-    except ValueError:
-        selection_1k_x.append(b)
-        selection_1k_y.append(1)
-    else:
-        selection_1k_y[index] += 1
 
-plt.bar(selection_1k_x, selection_1k_y, label="Selection Sort")
+def bar_time_distribution(data, label):
+    x = []
+    y = []
+    for cycles in data:
+        cycles = round(cycles / GROUPING_SIZE)
+        try:
+            index = x.index(cycles)
+        except ValueError:
+            x.append(cycles)
+            y.append(1)
+        else:
+            y[index] += 1
 
+    plt.bar(x, y, label=label)
+
+def line_complexity_over_input_size(data, label):
+    pass # TODO
+
+
+plt.title("Zeit um 1000 Elemente zu sortieren (1000 mal pro Algorithmus)")
+bar_time_distribution(bubble["1k"],       "Bubble Sort")
+bar_time_distribution(selection["1k"], "Selection Sort")
 plt.ylabel("CPU Zyklen")
-plt.title("Zeit um 1000 Elemente zu sortieren.")
+
+
+
 plt.legend()
 plt.show()
