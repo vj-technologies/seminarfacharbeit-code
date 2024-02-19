@@ -4,10 +4,10 @@ import json
 GROUPING_SIZE = 500_000
 
 
-with open("bubble_sort.json", "r") as file:
+with open("data/bubble_sort.json", "r") as file:
     bubble = json.load(file)
 
-with open("selection_sort.json", "r") as file:
+with open("data/selection_sort.json", "r") as file:
     selection = json.load(file)
 
 
