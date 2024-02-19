@@ -27,11 +27,11 @@ def line_complexity_over_input_size(data, label):
     pass # TODO
 
 
-plt.title(f"Zeit in CPU-Zyklen um {data["array_size"]} Elemente zu sortieren ({data["test_count"]}/Algorithmus) Seed: {data["array_seed"]}")
+plt.title(f"Zeit in ns um {data["array_size"]} Elemente zu sortieren ({data["test_count"]}/Algorithmus) Seed: {data["array_seed"]}")
 bar_time_distribution(data["time_bubble"], "Bubble Sort")
 bar_time_distribution(data["time_selection"], "Selection Sort")
 bar_time_distribution(data["time_heap"], "Heap Sort")
-plt.ylabel("CPU Zyklen")
+plt.ylabel("Zeit in ns")
 
 
 

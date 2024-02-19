@@ -15,9 +15,9 @@ struct Benchmark {
     array_size: usize,
     array_seed: u64,
     test_count: u32,
-    time_bubble   : Vec<u64>,
-    time_selection: Vec<u64>,
-    time_heap     : Vec<u64>,
+    time_bubble   : Vec<u128>,
+    time_selection: Vec<u128>,
+    time_heap     : Vec<u128>,
 }
 
 fn main() {
@@ -55,16 +55,18 @@ fn main() {
 }
 
 
-fn test_algorithm(f: &dyn Fn(&mut Vec<i32>), mut array: Vec<i32>, test_count: u32) -> Vec<u64> {
-    let mut durations: Vec<u64> = vec![];
+fn test_algorithm(f: &dyn Fn(&mut Vec<i32>), mut array: Vec<i32>, test_count: u32) -> Vec<u128> {
+    let mut durations: Vec<u128> = vec![];
     for _ in 0..test_count {
-        let start = unsafe{ core::arch::x86_64::_rdtsc() };
+        // let start = unsafe{ core::arch::x86_64::_rdtsc() }; // cpu cycles
+        let start = std::time::Instant::now();
         f(&mut array);
-        let cpu_cycles = unsafe{ core::arch::x86_64::_rdtsc() } - start;
+        // let time = unsafe{ core::arch::x86_64::_rdtsc() } - start; // cpu cycles
+        let time = start.elapsed();
         if !verify_sorted_ascending(&array) {
             panic!("Algorithm is not sorting correctly!");
         }
-        durations.push(cpu_cycles);
+        durations.push(time.as_nanos());
     }
     durations
 }
