@@ -1,5 +1,7 @@
 import time, random
-import bubble_sort, insertion_sort, heap_sort
+from bubble_sort import bubble_sort
+from selection_sort import selection_sort
+from heap_sort import heap_sort
 
 def generate_random_numbers(length: int, seed: int) -> list[int]:
     array: list[int] = list(range(length))
@@ -15,19 +17,17 @@ def verify_sorted_ascending(array: list[int]) -> bool:
             return False
         prev = curr
     
-    True
+    return True
 
 
 def test_algorithm(algorithm, array: list[int], test_count: int) -> list[int]:
     durations = []
     for _ in range(test_count):
-        array_copy = array.copy()
-
         start = time.time_ns()
-        array_copy = algorithm(array_copy)
+        result = algorithm(array)
         nanosecs = time.time_ns() - start
-
-        if not verify_sorted_ascending(array_copy):
+        res = verify_sorted_ascending(result)
+        if not res:
             raise Exception("Algorithm is not sorting correctly!")
         durations.append(nanosecs)
     
@@ -46,8 +46,8 @@ if __name__ == "__main__":
     array: list[int] = generate_random_numbers(data["array_size"], data["array_seed"])
 
     data["time_bubble"]    = test_algorithm(bubble_sort,    array, data["test_count"])
-    data["time_insertion"] = test_algorithm(insertion_sort, array, data["test_count"])
+    data["time_selection"] = test_algorithm(selection_sort, array, data["test_count"])
     data["time_heap"]      = test_algorithm(heap_sort,      array, data["test_count"])
 
-    with open(f"../data/python_{data["array_size"]}_{data["array_seed"]}_{data["test_count"]}.json", "w") as file:
+    with open(f"./data/python_{data["array_size"]}_{data["array_seed"]}_{data["test_count"]}.json", "w") as file:
         json.dump(data, file)

@@ -14,7 +14,7 @@ def heapify(array: list[int], i: int, n: int):
         heapify(array, max, n)
 
 
-def heap_sort(array: list[int]):
+def heap_sort(array: list[int]) -> list[int]:
     n = len(array)
     for i in range(n//2, -1, -1):
         heapify(array, i, n)
@@ -22,3 +22,5 @@ def heap_sort(array: list[int]):
     for i in range(n-1, 0, -1):
         array[0], array[i] = array[i], array[0]
         heapify(array, 0, i)
+    
+    return array
