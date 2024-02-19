@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include<array>
 #include<cstdlib>
+#include<string>
+#include <chrono>
 using namespace std;
 const int Len = 10000;
 
-array<int, Len> stupid = { 9, 4, 8, 3, 6, 5, 1, 2, 7, 0 };
 
 
 void print_array(array<int, Len> barray) { // FIXME
@@ -72,7 +73,7 @@ void heapify(array<int, Len>& ret_array, int i, int n) {
     {
         max = leftchild;
     }
-    if (rightchild < n&& ret_array[max] < ret_array[rightchild])
+    if (rightchild < n && ret_array[max] < ret_array[rightchild])
     {
         max = rightchild;
 
@@ -87,6 +88,7 @@ void heapify(array<int, Len>& ret_array, int i, int n) {
 
 }
 array<int, Len> heapsort(array<int, Len> ret_array) {
+
     for (int i = Len / 2; i > -1; --i)
     {
         heapify(ret_array, i, Len);
@@ -99,7 +101,9 @@ array<int, Len> heapsort(array<int, Len> ret_array) {
         heapify(ret_array, 0, i);
 
     }
+
     return ret_array;
+
 
 }
 
@@ -108,17 +112,16 @@ array<int, Len> heapsort(array<int, Len> ret_array) {
 int main() {
 
     // bubble_sort(&array); // FIXME
+    auto begin = std::chrono::high_resolution_clock::now();
+    for (int i = 1; i < 1; i++) {
 
-    array<int, Len> Fug = genarray();
-    print_array(Fug);
-    printf("\n");
-    print_array(bubble_sort(Fug));
-    printf("\n");
-    print_array(selectionsort(Fug));
-    printf("\n");
-    print_array(heapsort(Fug));
+        array<int, Len> arrays = genarray();
 
+        heapsort(arrays);
+    }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    printf("Time measured: %.9f seconds.\n", elapsed.count() * 1e-9);
 
     return 0;
 }
-
