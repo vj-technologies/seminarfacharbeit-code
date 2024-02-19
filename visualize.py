@@ -3,12 +3,9 @@ import json
 
 GROUPING_SIZE = 500_000
 
-
-with open("data/bubble_sort.json", "r") as file:
-    bubble = json.load(file)
-
-with open("data/selection_sort.json", "r") as file:
-    selection = json.load(file)
+filename = input("Filename: ")
+with open(f"data/{filename}.json", "r") as file:
+    data = json.load(file)
 
 
 def bar_time_distribution(data, label):
@@ -30,9 +27,10 @@ def line_complexity_over_input_size(data, label):
     pass # TODO
 
 
-plt.title("Zeit um 1000 Elemente zu sortieren (1000 mal pro Algorithmus)")
-bar_time_distribution(bubble["1k"],       "Bubble Sort")
-bar_time_distribution(selection["1k"], "Selection Sort")
+plt.title(f"Zeit in CPU-Zyklen um {data["array_size"]} Elemente zu sortieren ({data["test_count"]}/Algorithmus) Seed: {data["array_seed"]}")
+bar_time_distribution(data["time_bubble"], "Bubble Sort")
+bar_time_distribution(data["time_selection"], "Selection Sort")
+bar_time_distribution(data["time_heap"], "Heap Sort")
 plt.ylabel("CPU Zyklen")
 
 

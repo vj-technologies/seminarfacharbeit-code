@@ -14,51 +14,56 @@ use heap_sort::heap_sort;
 struct Benchmark {
     array_size: usize,
     array_seed: u64,
+    test_count: u32,
     time_bubble   : Vec<u64>,
     time_selection: Vec<u64>,
     time_heap     : Vec<u64>,
 }
 
 fn main() {
-    // let array: Vec<i32> = vec![9, 7, 4, 3, 6, 8, 0, 2, 1, 5];
-    // let runtimes = test_algorithm(&insertion_sort, array, None);
-
     let args: Vec<String> = std::env::args().collect();
+    
+    if args.len() != 4 {
+        println!("3 arguments required: array_size array_seed test_count");
+        return
+    }
     
     let array_size = args[1].trim().parse()
         .expect("First argument must be a positive integer.");
     let array_seed = args[2].trim().parse()
         .expect("Second argument must be a positive integer.");
+    let test_count = args[3].trim().parse()
+        .expect("Third argument must be a positive integer.");
 
     let array = generate_random_numbers(array_size, array_seed);
 
     let bench = Benchmark {
         array_size,
         array_seed,
-        time_bubble:    test_algorithm(&bubble_sort,    array.clone(), None),
-        time_selection: test_algorithm(&selection_sort, array.clone(), None),
-        time_heap:      test_algorithm(&heap_sort,      array.clone(), None),
+        test_count,
+        time_bubble:    test_algorithm(&bubble_sort,    array.clone(), test_count),
+        time_selection: test_algorithm(&selection_sort, array.clone(), test_count),
+        time_heap:      test_algorithm(&heap_sort,      array.clone(), test_count),
     };
 
     let contents = serde_json::to_string(&bench)
         .expect("Failed to parse as JSON.");
 
-    let filename = format!("data/bench_{}_{}.json", array_size, array_seed);
+    let filename = format!("data/rust_{}_{}_{}.json", array_size, array_seed, test_count);
     std::fs::write(filename, contents)
         .expect("Failed to write file.");
 }
 
 
-fn test_algorithm(f: &dyn Fn(&mut Vec<i32>), mut array: Vec<i32>, test_count: Option<u32>) -> Vec<u64> {
+fn test_algorithm(f: &dyn Fn(&mut Vec<i32>), mut array: Vec<i32>, test_count: u32) -> Vec<u64> {
     let mut durations: Vec<u64> = vec![];
-    for _ in 0..test_count.unwrap_or(1000) {
+    for _ in 0..test_count {
         let start = unsafe{ core::arch::x86_64::_rdtsc() };
         f(&mut array);
         let cpu_cycles = unsafe{ core::arch::x86_64::_rdtsc() } - start;
         if !verify_sorted_ascending(&array) {
             panic!("Algorithm is not sorting correctly!");
         }
-
         durations.push(cpu_cycles);
     }
     durations
@@ -67,7 +72,6 @@ fn test_algorithm(f: &dyn Fn(&mut Vec<i32>), mut array: Vec<i32>, test_count: Op
 
 fn generate_random_numbers(length: usize, seed: u64) -> Vec<i32> {
     let mut rng = random::default(seed);
-
     rng.iter().take(length).collect::<Vec<i32>>()
 }
 
@@ -80,6 +84,5 @@ fn verify_sorted_ascending(array: &Vec<i32>) -> bool {
         }
         prev = *curr;
     }
-
     true
 }
