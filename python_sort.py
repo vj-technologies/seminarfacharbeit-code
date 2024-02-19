@@ -1,4 +1,4 @@
-import random, time, math
+import random, time, math,threading
 runtimes = []
 
 lol = []
@@ -60,29 +60,25 @@ def heap_sort(array: list[int]):
 
 
 
-# import threading
 
-# for i in range(1000):
-#     lol.append(gen_ran_list())
+for i in range(1000):
+    lol.append(gen_ran_list())
 
-# for k in range(len(lol)):
-#     t = threading.Thread(target=heap_sort, args=[lol[k]])
-#     t.start()
-#     t.join()
-
-
-# avg_run = sum(runtimes)/len(runtimes)
+for k in range(len(lol)):
+    t = threading.Thread(target=heap_sort, args=[lol[k]])
+    t.start()
+    t.join()
 
 
-# print(f"the average runtime is: {avg_run} seconds")
-# print(f"the highest runtime is: {max(runtimes)} seconds")
-# print(f"the lowest runtime is: {min(runtimes)} seconds")
+avg_run = sum(runtimes)/len(runtimes)
 
 
-# ask = input("do you want to see the full list of runtimes N/Y \n")
-# if ask == "Y" or ask == "y" or ask == "yes" or ask == "Yes":
-#     print(runtimes)
+print(f"the average runtime is: {avg_run} seconds")
+print(f"the highest runtime is: {max(runtimes)} seconds")
+print(f"the lowest runtime is: {min(runtimes)} seconds")
 
-a= [9, 4, 8, 3, 6, 5, 1, 2, 7, 0]
 
-heap_sort(a)
+ask = input("do you want to see the full list of runtimes N/Y \n")
+if ask == "Y" or ask == "y" or ask == "yes" or ask == "Yes":
+    print(runtimes)
+
