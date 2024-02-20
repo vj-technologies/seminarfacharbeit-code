@@ -3,6 +3,7 @@
 #include<cstdlib>
 #include<string>
 #include <chrono>
+
 using namespace std;
 const int Len = 1000;
 array<std::chrono::nanoseconds, Len> Selection_sort_l;
@@ -11,12 +12,8 @@ array<std::chrono::nanoseconds, Len> heapsort_l;
 
 
 
-
-
 void print_array_time(array<std::chrono::nanoseconds, Len> barray) { // FIXME
     for (int j = 0; j < Len; j = 10 + j) {
-
-
         for (int i = 0; i < 10; ++i) {
             printf("%i, ", barray[j + i]);
         }
@@ -36,10 +33,8 @@ array<int, Len> genarray() {
     {
         int random = rand() % Len;
         ret_array[i] = random;
-
     }
     return ret_array;
-
 }
 
 
@@ -52,23 +47,19 @@ array<int, Len> selectionsort(array<int, Len> ret_array, int b)
         for (int j = i + 1; j < Len; ++j)
         {
             if (ret_array[j] < ret_array[jmin]) {
-
                 jmin = j;
             }
         }
         int temp = ret_array[jmin];
         ret_array[jmin] = ret_array[i];
         ret_array[i] = temp;
-
-
-
     }
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
     Selection_sort_l[b] = elapsed;
     return ret_array;
-
 }
+
 
 array<int, Len> bubble_sort(array<int, Len> ret_array, int b) {
     auto begin = std::chrono::high_resolution_clock::now();
@@ -89,7 +80,6 @@ array<int, Len> bubble_sort(array<int, Len> ret_array, int b) {
 
 
 void heapify(array<int, Len>& ret_array, int i, int n) {
-
     int max = i;
     int leftchild = 2 * i + 1;
     int rightchild = 2 * i + 2;
@@ -101,7 +91,6 @@ void heapify(array<int, Len>& ret_array, int i, int n) {
     if (rightchild < n && ret_array[max] < ret_array[rightchild])
     {
         max = rightchild;
-
     }
     if (max != i)
     {
@@ -110,38 +99,30 @@ void heapify(array<int, Len>& ret_array, int i, int n) {
         ret_array[i] = temp;
         heapify(ret_array, max, n);
     }
-
 }
+
+
 array<int, Len> heapsort(array<int, Len> ret_array, int b) {
     auto begin = std::chrono::high_resolution_clock::now();
     for (int i = Len / 2; i > -1; --i)
     {
         heapify(ret_array, i, Len);
-
     }
     for (int i = Len - 1; i > 0; --i) {
         int temp = ret_array[0];
         ret_array[0] = ret_array[i];
         ret_array[i] = temp;
         heapify(ret_array, 0, i);
-
     }
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
     heapsort_l[b] = elapsed;
     return ret_array;
-
-
 }
 
 
-
 int main() {
-
-    // bubble_sort(&array); // FIXME
-
     for (int i = 0; i < Len; i++) {
-
         array<int, Len> arrays = genarray();
         bubble_sort(arrays, i);
         selectionsort(arrays, i);
