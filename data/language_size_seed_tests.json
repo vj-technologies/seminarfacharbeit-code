@@ -1,0 +1,8 @@
+{
+    "array_size": 0,
+    "array_seed": 0,
+    "test_count": 1000,
+    "time_bubble": [],
+    "time_selection": [],
+    "time_heap": []
+}

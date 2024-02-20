@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import json
 
-GROUPING_SIZE = 500_000
+GROUPING_SIZE = 50_000
 
 filename = input("Filename: ")
 with open(f"data/{filename}.json", "r") as file:
@@ -26,12 +26,12 @@ def bar_time_distribution(data, label):
 def line_complexity_over_input_size(data, label):
     pass # TODO
 
-
-plt.title(f"Zeit in ns um {data["array_size"]} Elemente zu sortieren ({data["test_count"]}/Algorithmus) Seed: {data["array_seed"]}")
+plt.title(f"Array size: {data["array_size"]} Language: {filename.split("_")[0]} Test count: {data["test_count"]}/Algorithmus Seed: {data["array_seed"]}")
 bar_time_distribution(data["time_bubble"], "Bubble Sort")
 bar_time_distribution(data["time_selection"], "Selection Sort")
 bar_time_distribution(data["time_heap"], "Heap Sort")
-plt.ylabel("Zeit in ns")
+plt.ylabel("Häufigkeit")
+plt.xlabel("Zeit in ns")
 
 
 
