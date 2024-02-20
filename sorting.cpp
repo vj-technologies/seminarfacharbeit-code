@@ -14,8 +14,13 @@ array<std::chrono::nanoseconds, Len> heapsort_l;
 
 
 void print_array_time(array<std::chrono::nanoseconds, Len> barray) { // FIXME
-    for (int i = 0; i < Len; ++i) {
-        printf("%i ", barray[i]);
+    for (int j = 0; j < Len; j = 10 + j) {
+
+
+        for (int i = 0; i < 10; ++i) {
+            printf("%i, ", barray[j + i]);
+        }
+        printf("\n");
     }
 }
 
@@ -143,20 +148,20 @@ int main() {
         heapsort(arrays, i);
 
     }
-    printf("arraysize: %i", Len);
+
+    printf("{\"array_size\": %i,", Len);
     printf("\n");
-    printf("test_count: %i", Len);
+    printf("\"test_count\": %i,", Len);
     printf("\n");
-    printf("timen in : nanoseconds");
-    printf("\n");
-    printf("time_bubble: ");
+    printf("\"time_bubble\": [");
     print_array_time(bubble_sort_l);
-    printf("\n");
-    printf("time_selection: ");
+    printf("],\n");
+    printf("\"time_selection\": [");
     print_array_time(Selection_sort_l);
-    printf("\n");
-    printf("time_heap: ");
+    printf("],\n");
+    printf("\"time_heap\": [");
     print_array_time(heapsort_l);
+    printf("]}");
 
     return 0;
 }
