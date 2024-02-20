@@ -1,4 +1,7 @@
 {
+    "cpu": "...",
+    "ram": "...MHz",
+    "os": "Windows 10",
     "array_size": 0,
     "array_seed": 0,
     "test_count": 1000,
