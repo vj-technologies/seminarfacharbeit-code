@@ -127,10 +127,9 @@ int main() {
         bubble_sort(arrays, i);
         selectionsort(arrays, i);
         heapsort(arrays, i);
-
     }
 
-    printf("{\"array_size\": %i,", Len);
+    printf("{\n\"array_size\": %i,", Len);
     printf("\n");
     printf("\"test_count\": %i,", Len);
     printf("\n");
@@ -142,7 +141,7 @@ int main() {
     printf("],\n");
     printf("\"time_heap\": [");
     print_array_time(heapsort_l);
-    printf("]}");
+    printf("]\n}");
 
     return 0;
 }
